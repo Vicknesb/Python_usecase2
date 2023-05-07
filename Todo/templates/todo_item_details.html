@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>To-do List and item Details</h1>
+
+    {% include "includes/header.html" %}
+
+    <h2>To-do Details</h1>
+
+    <table>
+        <thead>
+            <th>List ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+        {% for tododetail in forms %}
+        <tr>
+            <td><a href="todo/{{tododetail.id}}">{{tododetail.id}}</a></<td>
+            <td>{{ tododetail.title }}</td>
+            <td>{{ tododetail.description }}</td>
+            <td>
+                <form action ='{% url 'listdelete' tododetail.id %}' method ="POST">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+                </form>    
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<h2>To-do Item Details</h1>
+
+<table>
+    <thead>
+        <th>Item ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Due Date</th>
+        <th>Delete</th>
+    </thead>
+    <tbody>
+    {% for item in item_data %}
+    <tr>
+        <td><a href="todoitems/{{item.id}}">{{item.id}}</a></td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.duedate }}</td>
+        <td>
+            <form action ='{% url 'itemdelete' item.id %}'>
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
